@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { SearchInput } from '../molecules/SearchInput';
 import { UserCard } from '../organisms/user/UserCard';
+import { useLocation } from 'react-router-dom';
 
 // 表示確認のためにオブジェクトを10個生成
 const users = [...Array(10).keys()].map((val) => {
@@ -18,6 +19,8 @@ const users = [...Array(10).keys()].map((val) => {
 });
 
 export const Users = () => {
+  const { state } = useLocation();
+  const isAdmin = state ? state.isAdmin : false;
   return (
     <div>
       <SContainer>
@@ -25,7 +28,7 @@ export const Users = () => {
         <SearchInput />
         <SUserArea>
           {users.map((user) => (
-            <UserCard {...{ user }} />
+            <UserCard key={user.id} {...{ user, isAdmin }}  />
           ))}
         </SUserArea>
       </SContainer>
